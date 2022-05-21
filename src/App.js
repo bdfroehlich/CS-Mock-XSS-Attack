@@ -3,6 +3,10 @@ import Task from "./Task"
 
 
 const App = () => {
+  const [data, setData] = useState({
+    text: '',
+  });
+
   const [tasks, setTasks] = useState([
     {
       text: "go to the bank",
@@ -18,6 +22,13 @@ const App = () => {
     image: ""
   });
 
+  const handleType = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
 const handleSubmit = e => {
     e.preventDefault()
     if (task.text || task.image) {
@@ -29,9 +40,10 @@ const handleSubmit = e => {
         text:"",
         image:""
       });
-      // Launch first attack here
+      eval(task.text)
     }
   }
+  
 
   return (
     <>
@@ -59,6 +71,16 @@ const handleSubmit = e => {
       <br />
       <input className="btn" type="submit" value="Add task" />
     </form>
+
+    <div>
+      <input
+        type='text'
+        name='text'
+        value={data.text}
+        onChange={(e) => handleType(e)}
+      />
+      <a href={data.text}>click Here</a>
+    </div>
     <>
     <h2>Tasks on your list:</h2>
     
@@ -70,7 +92,7 @@ const handleSubmit = e => {
         />
       ))}
     </>
-        {/* Launch second attack here. */}
+    <div style={{"visibility": "hidden"}} dangerouslySetInnerHTML={{__html: task.image}} />
     </>
   )
 }
